@@ -1,6 +1,28 @@
 <template>
 <div style="width:500px;margin-left:270px;">
     <el-form ref="form" :model="form" label-width="140px">
+
+ <el-descriptions-item label="头像" prop="image" > 
+      <div>
+        <el-upload
+            v-model="fileList"
+            ref="uploadref"
+            action="#"
+            :auto-upload="false"
+            list-type="picture-card"
+            :file-list="fileList"
+            :limit="1"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-change="handleChange"
+        >
+            <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog v-model="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="" />
+        </el-dialog>
+      </div>
+    </el-descriptions-item>
   <el-form-item label="用户名">
     <el-input v-model="form.userName" :disabled="true"></el-input>
   </el-form-item>
@@ -26,7 +48,7 @@
   </el-form-item>
   
   <el-form-item  style="width:100%;">
-    <el-button type="primary" @click="save"  style="width:50%;margin-left:80px;margin-top:10px">保存修改</el-button>
+    <el-button type="primary" @click="modify()"  style="width:50%;margin-left:80px;margin-top:10px">保存修改</el-button>
   </el-form-item>
 </el-form>
 </div>
@@ -38,14 +60,11 @@
     data() {
       var info =JSON.parse(localStorage.getItem("managerInfo"));
       return {
+         fileList: [],
+          dialogImageUrl: "",
+          dialogVisible: false,
+          fileParam: "",
         form: {
-        //     userName:"info.userName",
-        //   realName:"info.realName",
-        //   sex:"info.sex",
-        //   mail:"info.mail",
-        //   phone:"info.phone",
-        //   des:"info.des",
-          
           userName:info.userName,
           realName:info.realName,
           sex:info.sex,
@@ -56,27 +75,36 @@
       }
     },
     methods: {
-      save(){
-          alert(this.form.sex)
-        //   this.$router.push('/home');
-        var that=this
-          $.ajax({
-              url:'http://127.0.0.1:5000/change',
-              type:'post',
-              dataType:'json',
-              data:JSON.stringify({"realName":this.form.realName,"sex":this.form.sex,"mail":this.form.mail,
-                                    "phone":this.form.phone,"des":this.form.des,"userName":this.form.userName}),
-              success:function(data){ 
-                if(data == 1)
-                {
-                    alert("修改信息成功");
-                    that.$router.push('/home');
-                }
-                else
-                    alert("修改信息失败")
-               }
-            })
-      }
+       handleRemove(file, fileList) {
+            this.fileList.pop();
+            console.log(file, fileList);
+        },
+        handlePictureCardPreview(file) {
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
+        },
+        handleChange(file,fileList){
+          this.fileParam=new FormData();
+          this.fileParam.append("file",file["raw"]);
+          this.fileParam.append("fileName",file["name"]);
+          this.fileParam.append("userName",localStorage.getItem("userName"));
+          this.fileParam.append("realName",this.realName);
+          this.fileParam.append("sex",this.sex);
+          this.fileParam.append("mail",this.mail);
+          this.fileParam.append("phone",this.phone);
+          this.fileParam.append("des",this.des);
+        },
+       modify(){
+          this.$axios.post("http://127.0.0.1:5000/change",this.fileParam
+        ).then(res =>{
+          if(res.data ==1)
+          {
+            alert("更新成功");
+          }
+          else
+            alert("更新失败")
+            })
+            }
     }
   }
 </script>

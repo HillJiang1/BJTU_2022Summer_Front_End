@@ -5,7 +5,7 @@
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
         </div>
-        <div class="logo">智能家居安防系统</div>
+        <div class="logo">智慧养老系统</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
@@ -59,18 +59,18 @@ export default {
                 this.$router.push('/');
             }
             if (command == 'info') {
-            //后端传管理员信息
-              $.ajax({
-              url:'http://127.0.0.1:5000/queryManager',
-              type:'post',
-              data:JSON.stringify({"userName":localStorage.getItem("userName")}),
-              dataType:'json',
-              success:function(data){ //后端返回的json数据（此处data为json对象）
-                localStorage.setItem("managerInfo",JSON.stringify(data));
-            }
-            })
-                this.$router.push('/managerInfo')
-            }
+                alert(1)
+                 var userName = this.form[index].userName
+                alert(userName)
+         //通过id向后端获取老人数据
+          localStorage.setItem("userName",userName)
+
+          this.$axios.post("http://127.0.0.1:5000/queryManager")
+          .then(res =>{
+            localStorage.setItem("managerInfo",JSON.stringify(res))
+          })
+         this.$router.push('/managerInfo')
+         }
             if(command == "change"){
                 //更改密码
                 this.$router.push('/confirmPwd');

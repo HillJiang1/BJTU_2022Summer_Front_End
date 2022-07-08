@@ -65,48 +65,24 @@
       var olds_info = JSON.parse(localStorage.getItem('olds')||'[]');
       return {
         tableData: olds_info,
-        
-        // tableData: [{
-        //   id:'1',
-        //   oldName:'王继红',
-        //   sex:'女',
-        //   phone:'12345678999',
-        //   roomNumber:'111',
-        //   guardian1_phone:'12345698999'
-        // },
-        // {
-        //   id:'4',
-        //   oldName:'王继红',
-        //   sex:'女',
-        //   phone:'12345678999',
-        //   roomNumber:'111',
-        //   guardian1_phone:'12345698999'
-        // }
-        // ]
+     
       }
     },
 
     methods:{
       //查看老人
         queryMan:function(index){
-         alert(this.tableData[index].id)
-         var id = this.tableData[index].id
-         //通过id向后端获取老人数据
-         localStorage.setItem("old_id",id)
-          $.ajax({
-            url:'http://127.0.0.1:5000/queryOld',
-            type:'post',
-            dataType:'json',
-            data:JSON.stringify({"id": id}),
-            success:function(data){ 
-              console.log(data)
-              localStorage.setItem("concreteOld",JSON.stringify(data))
-              var old = localStorage.getItem('concreteOld');
-              console.log(old.oldName)
-         }
-         })
-         this.$router.push('/concreteOld')
-        },
+          alert(this.tableData[index].id)
+         var id = this.tableData[index].id
+         //通过id向后端获取老人数据
+          localStorage.setItem("old_id",id)
+          this.$axios.post("http://127.0.0.1:5000/queryOld")
+          .then(res =>{
+            localStorage.setItem("concreteOld",JSON.stringify(res))
+          })
+         this.$router.push('/concreteOld')
+         },
+        
         
         addOld:function(){
             alert(111)

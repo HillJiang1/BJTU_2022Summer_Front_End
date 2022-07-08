@@ -28,20 +28,20 @@ export default new Router({
             {
               // 老人列表
               path: '/oldMen',
-              component: () => import('../components/page/oldMen.vue'),
+              component: () => import('../components/page/old/oldMen.vue'),
               meta: { title: '老人列表' }
             },
             {
                 //添加老人
                 path:'/addOld',
-                component:() =>import('../components/page/addOld.vue'),
+                component:() =>import('../components/page/old/addOld.vue'),
                 meta: { title: '添加老人' }
             }
             ,
             {
                 //查看具体老人信息
                 path:'/concreteOld',
-                component:() =>import('../components/page/d_old_mes.vue'),
+                component:() =>import('../components/page/old/d_old_mes.vue'),
                 meta: { title: '查看老人信息' }
             },
             {
@@ -68,6 +68,50 @@ export default new Router({
                 path:'/changePwd',
                 component:() =>import('../components/page/change_pwd.vue'),
                 meta:{title:'更改密码'}
+            },
+            {
+                // 老人统计分析图
+                path:'/old_ana',
+                component:() =>import('../components/page/old/old_ana.vue'),
+                meta:{title:'老人统计分析图'}
+            },
+            {
+                //显示全部工作人员
+                path:'/workers',
+                component:() =>import('../components/page/worker/workers.vue'),
+                meta:{title:'全部工作人员信息'}
+            },
+            {
+                //添加工作人员
+                path:'/addWorker',
+                component:() =>import('../components/page/worker/addWorker.vue'),
+                meta: { title: '添加工作人员' }
+            }
+            ,
+            {
+                //查看具体工作人员信息
+                path:'/concreteWorker',
+                component:() =>import('../components/page/worker/concreteWorker.vue'),
+                meta: { title: '查看工作人员信息' }
+            },
+            {
+                //显示全部志愿者
+                path:'/volunteers',
+                component:() =>import('../components/page/volunteer/volunteers.vue'),
+                meta:{title:'全部志愿者信息'}
+            },
+            {
+                //添加志愿者
+                path:'/addVolunteer',
+                component:() =>import('../components/page/volunteer/addVolunteer.vue'),
+                meta: { title: '添加志愿者' }
+            }
+            ,
+            {
+                //查看具体志愿者信息
+                path:'/concreteVolunteer',
+                component:() =>import('../components/page/volunteer/concreteVolunteer.vue'),
+                meta: { title: '查看志愿者信息' }
             }
         ]
     }

@@ -70,7 +70,7 @@ export default {
 
         login:function(){
            alert(this.ruleForm2.username +" "+this.ruleForm2.password)
-            // this.$router.push('/home');
+            this.$router.push('/home');
             var that = this
             $.ajax({
               url:'http://127.0.0.1:5000/login',
