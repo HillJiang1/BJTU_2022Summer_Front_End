@@ -46,10 +46,11 @@
    import axios from "axios";
   export default {
     data() {
-      var volunteer = JSON.parse(localStorage.getItem('concreteVolunteer'));
+      var volunteer = JSON.parse(localStorage.getItem('concreteVolunteer')).data;
+
       return {
         fileList: [],
-        dialogImageUrl: "",
+        dialogImageUrl: volunteer.image,
         dialogVisible: false,
         fileParam: "",
         id:volunteer.id,

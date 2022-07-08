@@ -59,18 +59,22 @@ export default {
                 this.$router.push('/');
             }
             if (command == 'info') {
-                alert(1)
-                 var userName = this.form[index].userName
-                alert(userName)
+                // alert(1)
+                // console.log(index)
+                //  var userName = this.form[index].userName
+                
+                // alert(userName)
          //通过id向后端获取老人数据
-          localStorage.setItem("userName",userName)
+                var userName=JSON.parse(localStorage.getItem("userName"))
+console.log(userName)
+                alert(userName)
 
-          this.$axios.post("http://127.0.0.1:5000/queryManager")
-          .then(res =>{
-            localStorage.setItem("managerInfo",JSON.stringify(res))
-          })
-         this.$router.push('/managerInfo')
-         }
+                this.$axios.post("http://127.0.0.1:5000/queryManager",{userName:userName})
+                .then(res =>{
+                    localStorage.setItem("managerInfo",JSON.stringify(res))
+                  })
+                 this.$router.push('/managerInfo')
+                 }
             if(command == "change"){
                 //更改密码
                 this.$router.push('/confirmPwd');

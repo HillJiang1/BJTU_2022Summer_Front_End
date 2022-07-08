@@ -85,7 +85,7 @@
          //通过id向后端获取义工数据
         //  localStorage.setItem("worker_id",id)
         localStorage.setItem("id",id)
-          this.$axios.post("http://127.0.0.1:5000/queryVolunteer")
+          this.$axios.post("http://127.0.0.1:5000/queryVolunteer",{id:id})
           .then(res =>{
             localStorage.setItem("concreteVolunteer",JSON.stringify(res))
           })

@@ -87,7 +87,7 @@
          console.log(id)
          //通过id向后端获取工作人员数据
          localStorage.setItem("id",id)
-         this.$axios.post("http://127.0.0.1:5000/queryWorker")
+         this.$axios.post("http://127.0.0.1:5000/queryWorker",{id:id})
           .then(res =>{
             localStorage.setItem("concreteWorker",JSON.stringify(res))
           })

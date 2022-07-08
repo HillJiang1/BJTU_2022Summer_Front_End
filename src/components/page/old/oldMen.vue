@@ -76,7 +76,7 @@
          var id = this.tableData[index].id
          //通过id向后端获取老人数据
           localStorage.setItem("old_id",id)
-          this.$axios.post("http://127.0.0.1:5000/queryOld")
+          this.$axios.post("http://127.0.0.1:5000/queryOld",{id:id})
           .then(res =>{
             localStorage.setItem("concreteOld",JSON.stringify(res))
           })

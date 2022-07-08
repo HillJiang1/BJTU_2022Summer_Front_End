@@ -57,7 +57,7 @@
 import axios from "axios";
 export default {
         data() {
-        var old = JSON.parse(localStorage.getItem('concreteOld'));
+        var old = JSON.parse(localStorage.getItem('concreteOld')).data;
         console.log(old)
         console.log(old['oldName'])
         return {

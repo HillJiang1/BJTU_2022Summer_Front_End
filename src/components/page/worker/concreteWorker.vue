@@ -47,7 +47,7 @@
   import axios from "axios";
   export default {
     data() {
-      var worker = JSON.parse(localStorage.getItem('concreteWorker'));
+      var worker = JSON.parse(localStorage.getItem('concreteWorker')).data;
       return {
         fileList: [],
         dialogImageUrl: "",
