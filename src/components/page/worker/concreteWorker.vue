@@ -1,6 +1,6 @@
 <template>
 <div style="width:500px;margin-left:270px;">
-    <el-form ref="form" :model="form" label-width="140px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
   <el-form-item label="工号">
     <el-input v-model="form.id" :disabled="true"></el-input>
   </el-form-item>
@@ -11,10 +11,10 @@
     <el-input v-model="form.sex" :disabled="true"></el-input>
   </el-form-item>
 
- <el-form-item label="电话">
+ <el-form-item label="电话" prop="phone">
     <el-input v-model="form.phone"></el-input>
   </el-form-item>
-   <el-form-item label="身份证号">
+   <el-form-item label="身份证号" prop="ID">
     <el-input v-model="form.ID" :disabled="true"></el-input>
   </el-form-item>
  <el-form-item label="生日">
@@ -80,6 +80,22 @@
     data() {
       var worker = JSON.parse(localStorage.getItem('concreteWorker')).data;
       // alert(worker.image)
+      let validatePhone =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('手机号不能为空'));
+            }
+            if (!/^1[3456789]\d{9}$/.test(value)){
+                callback(new Error('手机号不正确！'));
+            }
+        };
+      let validateID =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('身份证号不能为空'));
+            }
+            if (!/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[0-2])(([0-2][1-9])|10|20|30|31)\d{3}(\d|X|x)$/.test(value)){
+                callback(new Error('身份证号不正确！'));
+            }
+        };
       return {
         
         
@@ -101,6 +117,10 @@
             createTime:worker.createTime,
             createName:worker.createName,
             fileParam: "",
+      },
+      rules:{
+         ID: [{validator:validateID ,  trigger: 'blur'}],
+        phone: [{validator:validatePhone, trigger: 'blur'}],
       }
     }
     },

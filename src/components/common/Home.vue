@@ -1,19 +1,25 @@
 <template>
+
+   
     <div class="wrapper" color = "black">
         <v-head></v-head>
         <v-sidebar></v-sidebar>
         <div class="content-box" :class="{'content-collapse':collapse}">
             <v-tags></v-tags>
             <div class="content">
-                <transition name="move" mode="out-in">
+                 <!-- <el-image :src="require('@/components/common/back.png')" style="margin-left:200px"></el-image>               -->
+                     <transition name="move" mode="out-in">
                     <keep-alive :include="tagsList">
                         <router-view></router-view>
                     </keep-alive>
                 </transition>
                 <el-backtop target=".content"></el-backtop>
+                
+               
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -28,8 +34,11 @@ export default {
     data() {
         return {
             tagsList: [],
-            collapse: false
+            collapse: false,
+            fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+            
         };
+        
     },
     components: {
         vHead,
@@ -52,3 +61,14 @@ export default {
     }
 };
 </script>
+
+<style>
+/* #building{
+  background:url("../common/back.png");
+  width:100%;
+  height:100%;
+  position:fixed;
+  background-size:100% 100%;
+} */
+
+</style>

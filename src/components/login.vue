@@ -24,10 +24,7 @@
                     <div style = "margin-left:300px;">
                         <el-button type="text" @click="gotoRegister()">注册新账号</el-button>
                     </div>
-                    
-                    <!-- <el-button type="primary"  @click="gotoRegister" >登录</el-button> -->
-                    
-
+ 
                     <el-form-item style="width:100%;">
                         <el-button type="primary" style="width:100%;padding-top:10px" @click="login" >登录</el-button>
                         
@@ -70,7 +67,7 @@ export default {
 
         login:function(){
            alert(this.ruleForm2.username +" "+this.ruleForm2.password)
-            this.$router.push('/home');
+           
             var that = this
             $.ajax({
               url:'http://127.0.0.1:5000/login',
@@ -84,13 +81,15 @@ export default {
                 console.log("Print data:")
                 console.log(data)
                 console.log("Finished")
+                
+                //登录成功与否
                 if(data == '0')
                 {
                     alert("账号或密码不对");
                 }
-                //登录成功与否
                 else //登录成功-返回管理员姓名
-                {   console.log(data)
+                {   
+                    console.log(data)
                     localStorage.setItem("userName",data[0].userName)
                     localStorage.setItem("realName",data[0].realName)
                     alert(localStorage.getItem("userName")+localStorage.getItem("realName"))

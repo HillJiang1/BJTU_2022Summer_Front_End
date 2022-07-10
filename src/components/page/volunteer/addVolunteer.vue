@@ -1,8 +1,8 @@
 
 <template>
 <div style="width:500px;margin-left:270px;">
-    <el-form ref="form" :model="form" label-width="140px">
-  <el-form-item label="义工姓名">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+  <el-form-item label="义工姓名" prop="name">
     <el-input v-model="form.volunteerName"></el-input>
   </el-form-item>
 
@@ -12,28 +12,28 @@
       <el-option label="女" value="女"></el-option>
       </el-select>
   </el-form-item>
-<el-form-item label="出生日期">
+<el-form-item label="出生日期" prop="birthday">
     <el-col :span="11">
       <el-date-picker type="date" placeholder="选择日期" format="yyyy-MM-dd"  value-format="yyyy-MM-dd" v-model="form.birthday" style="width: 100%;"></el-date-picker>
     </el-col>
   </el-form-item>
 
- <el-form-item label="入职时间">
+ <el-form-item label="入职时间" prop="date_in">
     <el-col :span="11">
       <el-date-picker type="date" placeholder="选择日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd" v-model="form.hire_date"  style="width: 100%;"></el-date-picker>
     </el-col>
   </el-form-item>
 
 
-<el-form-item label="义工电话">
+<el-form-item label="义工电话"  prop="phone">
     <el-input v-model="form.phone"></el-input>
   </el-form-item>
   
-  <el-form-item label="义工身份证号">
+  <el-form-item label="义工身份证号" prop="ID">
     <el-input v-model="form.ID"></el-input>
   </el-form-item>
 
-  <el-form-item label="工时">
+  <el-form-item label="工时" prop="time">
     <el-input v-model="form.workTime"></el-input>
   </el-form-item>
 
@@ -70,6 +70,22 @@
 <script>
   export default {
     data() {
+       let validatePhone =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('手机号不能为空'));
+            }
+            if (!/^1[3456789]\d{9}$/.test(value)){
+                callback(new Error('手机号不正确！'));
+            }
+        };
+      let validateID =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('身份证号不能为空'));
+            }
+            if (!/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[0-2])(([0-2][1-9])|10|20|30|31)\d{3}(\d|X|x)$/.test(value)){
+                callback(new Error('身份证号不正确！'));
+            }
+        };
       return {
         fileParam: "",
         uploadDisabled:'',
@@ -84,16 +100,22 @@
           fileList: [],
           dialogImageUrl: "",
           dialogVisible: false
-        }
+        },
+         rules:{
+          birthday: [{required: true, message: 'please enter your birthday', trigger: 'blur'}],
+           ID: [{validator:validateID ,  trigger: 'blur'}],
+           phone: [{validator:validatePhone, trigger: 'blur'}],
       }
+    }
     },
-    computed: {
+
+//     computed: {
    
-    uploadDisabled:function() {
-        return this.form.fileList.length >0
-    },
+//     uploadDisabled:function() {
+//         return this.form.fileList.length >0
+//     },
   
-},
+// },
     methods: {
       handleRemove(file, fileList) {
             console.log(file, fileList);
@@ -133,22 +155,6 @@
                 else
                     alert("添加义工失败")
           })
-//           $.ajax({
-//               url:'http://127.0.0.1:5000/addVolunteer',
-//               type:'post',
-//               dataType:'json',
-//               data:JSON.stringify({"volunteerName":this.form.volunteerName,"sex":this.form.sex,"phone":this.form.phone,
-//                                     "ID":this.form.ID,"birthday":birthday,"workTime":this.form.workTime}),
-//               success:function(data){
-//                 if(data == 1)
-//                 {
-//                     alert("添加义工成功");
-//                     that.$router.push('/volunteers');
-//                 }
-//                 else
-//                     alert("添加义工失败")
-//                }
-//             })
       }
     }
   }

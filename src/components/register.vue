@@ -80,6 +80,24 @@
 export default {
     
     data(){ 
+        let validatePhone =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('手机号不能为空'));
+            }
+            if (!/^1[3456789]\d{9}$/.test(value)){
+                callback(new Error('手机号不正确！'));
+            }
+        };
+        let validateEmail =(rule,value,callback)=>{
+            if(!value){
+                callback(new Error('邮箱不能为空'));
+            }
+            if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)){
+                callback(new Error('邮箱不正确！'));
+            }
+        };
+
+        
         return{
             logining: false,
             fileParam: "",
@@ -101,8 +119,8 @@ export default {
             rules1: {
               realname: [{required: true, message: 'please enter your account', trigger: 'blur'}],
               sex: [{required: true, message: 'please enter your sex', trigger: 'blur'}],
-              email: [{required: true, message: 'enter your password', trigger: 'blur'}],
-              phone: [{required: true, message: 'enter your phone', trigger: 'blur'}],
+              email: [{validator:validateEmail ,  trigger: 'blur'}],
+              phone: [{validator:validatePhone, trigger: 'blur'}],
               description: [{required: true, message: 'enter your description', trigger: 'blur'}],
               userid: [{required: true, message: 'enter your userid', trigger: 'blur'}],
               pass: [{required: true, message: 'enter your password', trigger: 'blur'}]
@@ -150,40 +168,7 @@ export default {
                 else
                     alert("注册管理员失败")
           })
-//             $.ajax({
-//               url:'http://127.0.0.1:5000/register',
-//               data:JSON.stringify({"realname":this.ruleForm1.realname, 
-//                                     "sex":this.ruleForm1.sex,
-//                                     "email":this.ruleForm1.email,
-//                                     "phone":this.ruleForm1.phone,
-//                                     "description":this.ruleForm1.description,
-//                                     "userid":this.ruleForm1.userid,
-//                                     "pass":this.ruleForm1.pass}),
-              
-//               type:'post',
-//               dataType:'json',
-//               success:function(data){ //后端返回的json数据（此处data为json对象）
-                
-//                 // console.log("Print data:")
-//                 // console.log(data)
-//                 // console.log("Finished")
-//                 if(data == '1')
-//                 {
-//                     alert("注册成功");
-//                     this.$router.push('/')
-//                 }
-//                 //登录成功与否
-//                 else 
-//                 {
-//                     alert("注册失败，请重新注册")
-//                 }
-                
-                
-//           },
-//                error:function () {
-//               alert('异常')
-//           }
-//             })
+
         },
         
     }

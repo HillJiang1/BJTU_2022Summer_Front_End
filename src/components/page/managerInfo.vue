@@ -1,6 +1,6 @@
 <template>
 <div style="width:500px;margin-left:270px;">
-    <el-form ref="form" :model="form" label-width="140px">
+    <el-form ref="form" :model="form" :rules="rules" label-width="140px">
 
  <el-form-item label="头像" prop="image" > 
       <div>
@@ -28,20 +28,17 @@
     <el-input v-model="form.userName" :disabled="true"></el-input>
   </el-form-item>
   <el-form-item label="真实姓名">
-    <el-input v-model="form.realName"></el-input>
+    <el-input v-model="form.realName" :disabled="true"></el-input>
   </el-form-item>
   
-  <el-form-item label="性别" prop="sex">
-     <el-select v-model="form.sex" placeholder="请选择您的性别">
-     <el-option label="男" value="男"></el-option>
-      <el-option label="女" value="女"></el-option>
-  </el-select>
+  <el-form-item label="性别" >
+    <el-input v-model="form.sex" :disabled="true"></el-input>
   </el-form-item>
 
-  <el-form-item label="邮箱">
-    <el-input v-model="form.mail"></el-input>
+  <el-form-item label="邮箱" prop="email">
+    <el-input v-model="form.email"></el-input>
   </el-form-item>
-  <el-form-item label="电话">
+  <el-form-item label="电话" prop="phone">
     <el-input v-model="form.phone"></el-input>
   </el-form-item>
   <el-form-item label="描述">
@@ -59,6 +56,26 @@
   
   export default {
     data() {
+
+       let validatePhone =(rule,value,callback)=>{
+        console.log(value)
+            if(!value){
+                callback(new Error('手机号不能为空'));
+            }
+            if (!/^1[3456789]\d{9}$/.test(value)){
+                callback(new Error('手机号不正确！'));
+            }
+        };
+        let validateEmail =(rule,value,callback)=>{
+          console.log(value)
+            if(!value){
+                callback(new Error('邮箱不能为空'));
+            }
+            if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)){
+                callback(new Error('邮箱不正确！'));
+            }
+        };
+
       console.log(localStorage.getItem("managerInfo"))
       var info =JSON.parse(localStorage.getItem("managerInfo")).data;
       console.log(info)
@@ -73,10 +90,14 @@
           userName:info.userName,
           realName:info.realName,
           sex:info.sex,
-          mail:info.mail,
+          email:info.mail,
           phone:info.phone,
           des:info.des,
-        }
+        },
+         rules: {
+              email: [{validator:validateEmail ,  trigger: 'blur'}],
+              phone: [{validator:validatePhone, trigger: 'blur'}],
+            }
       }
     },
     methods: {
