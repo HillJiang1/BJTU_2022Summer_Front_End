@@ -112,6 +112,7 @@ export default {
 .login-container {
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
 }
 .login-page {
     -webkit-border-radius: 5px; 

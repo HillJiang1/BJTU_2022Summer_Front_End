@@ -70,8 +70,8 @@
     },
 
     methods:{
-      //查看老人
-        queryMan:function(index){
+       //查看老人
+        queryMan:function(index){
           alert(this.tableData[index].id)
          var id = this.tableData[index].id
          //通过id向后端获取老人数据
@@ -82,7 +82,6 @@
           })
          this.$router.push('/concreteOld')
          },
-        
         
         addOld:function(){
             alert(111)
@@ -90,13 +89,15 @@
         },
 
         deleteRow:function(index,rows){
+            alert(this.tableData[index].id)
+            var id = this.tableData[index].id
             rows.splice(index,1);
             //删除老人
             $.ajax({
               url:'http://127.0.0.1:5000/deleteOld',
               type:'post',
               dataType:'json',
-              data:JSON.stringify({"id": this.tableData[index].id}),
+              data:JSON.stringify({"id": id}),
               success:function(data){ 
                 if(data == 1)
                     alert("删除老人成功")

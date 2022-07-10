@@ -80,19 +80,19 @@
     },
 
     methods:{
-      //查看工作人员
-        queryWorker:function(index){
-         alert(this.tableData[index].id)
-         var id = this.tableData[index].id
-         console.log(id)
-         //通过id向后端获取工作人员数据
-         localStorage.setItem("id",id)
-         this.$axios.post("http://127.0.0.1:5000/queryWorker",{id:id})
+       //查看工作人员
+        queryWorker:function(index){
+         alert(this.tableData[index].id)
+         var id = this.tableData[index].id
+         console.log(id)
+         //通过id向后端获取工作人员数据
+         localStorage.setItem("id",id)
+         this.$axios.post("http://127.0.0.1:5000/queryWorker",{id:id})
           .then(res =>{
             localStorage.setItem("concreteWorker",JSON.stringify(res))
           })
-          this.$router.push('/concreteWorker')
-        },
+          this.$router.push('/concreteWorker')
+        },
         
         addWorker:function(){
             alert(111)

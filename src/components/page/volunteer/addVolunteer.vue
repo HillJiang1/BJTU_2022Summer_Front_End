@@ -43,6 +43,7 @@
             v-model="form.fileList"
             ref="uploadref"
             action="#"
+            :class="uploadDisabled"
             :auto-upload="false"
             list-type="picture-card"
             :file-list="fileList"
@@ -71,6 +72,7 @@
     data() {
       return {
         fileParam: "",
+        uploadDisabled:'',
         form: {
           volunteerName:'',
           sex:'',
@@ -85,15 +87,28 @@
         }
       }
     },
+    computed: {
+   
+    uploadDisabled:function() {
+        return this.form.fileList.length >0
+    },
+  
+},
     methods: {
       handleRemove(file, fileList) {
             console.log(file, fileList);
+            if(fileList.length == 0){
+             this.uploadDisabled =''
+            }
         },
         handlePictureCardPreview(file) {
             this.form.dialogImageUrl = file.url;
             this.form.dialogVisible = true;
         },
         handleChange(file, fileList) {
+          if(fileList.length>0){
+              this.uploadDisabled = 'disabled'
+          }
             this.fileParam = new FormData();
             this.fileParam.append("file", file["raw"]);
             this.fileParam.append("fileName", file["name"]);
@@ -138,7 +153,13 @@
     }
   }
 </script>
+<style>
+.disabled .el-upload--picture-card {
+    display: none;
+}
+</style>
 <style scoped>
+
 .page{
     -webkit-border-radius: 5px; 
     border-radius: 5px;

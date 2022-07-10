@@ -67,6 +67,7 @@
             v-model="form.fileList"
             ref="uploadref"
             action="#"
+            :class="uploadDisabled"
             :auto-upload="false"
             list-type="picture-card"
             :file-list="fileList"
@@ -94,6 +95,7 @@
     data() {
       return {
         fileParam: "",
+        uploadDisabled:'',
         form: {
           oldName: '',
           sex:'',
@@ -119,12 +121,17 @@
     methods: {
         handleRemove(file, fileList) {
             console.log(file, fileList);
+            if(fileList.length == 0){
+             this.uploadDisabled =''}
         },
         handlePictureCardPreview(file) {
             this.form.dialogImageUrl = file.url;
             this.form.dialogVisible = true;
         },
         handleChange(file, fileList) {
+          if(fileList.length>0){
+              this.uploadDisabled = 'disabled'
+          }
           var birthday = this.form.birthday
           let aData = new Date();
           let createTime = aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
@@ -198,6 +205,13 @@
     }
   }
 </script>
+
+<style>
+.disabled .el-upload--picture-card {
+    display: none;
+}
+</style>
+
 <style scoped>
 .page{
     -webkit-border-radius: 5px; 

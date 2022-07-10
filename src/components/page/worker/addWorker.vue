@@ -42,6 +42,7 @@
             v-model="form.fileList"
             ref="uploadref"
             action="#"
+            :class="uploadDisabled"
             :auto-upload="false"
             list-type="picture-card"
             :file-list="fileList"
@@ -71,6 +72,7 @@
     data() {
       return {
         fileParam: "",
+        uploadDisabled:'',
         form: {
           workerName:'',
           sex:'',
@@ -88,12 +90,18 @@
     methods: {
       handleRemove(file, fileList) {
             console.log(file, fileList);
+            if(fileList.length == 0){
+             this.uploadDisabled =''
+       }
         },
         handlePictureCardPreview(file) {
             this.form.dialogImageUrl = file.url;
             this.form.dialogVisible = true;
         },
         handleChange(file, fileList) {
+          if(fileList.length>0){
+              this.uploadDisabled = 'disabled'
+          }
           let aData = new Date();
           let createTime = aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
 
@@ -117,7 +125,7 @@
              if(res.data == 1)
                 {
                     alert("添加工作人员成功");
-                    that.$router.push('/oldMen');
+                    that.$router.push('/workers');
                 }
                 else
                     alert("添加工作人员失败")
@@ -144,6 +152,12 @@
     }
   }
 </script>
+<style>
+.disabled .el-upload--picture-card {
+    display: none;
+}
+</style>
+
 <style scoped>
 .page{
     -webkit-border-radius: 5px; 

@@ -71,8 +71,8 @@ export default new Router({
             },
             {
                 // 老人统计分析图
-                path:'/old_ana',
-                component:() =>import('../components/page/old/old_ana.vue'),
+                path:'/oldImage',
+                component:() =>import('../components/page/old/oldImage.vue'),
                 meta:{title:'老人统计分析图'}
             },
             {
@@ -86,7 +86,13 @@ export default new Router({
                 path:'/addWorker',
                 component:() =>import('../components/page/worker/addWorker.vue'),
                 meta: { title: '添加工作人员' }
-            }
+            },
+            {
+                // 工作人员统计分析图
+                path:'/workerImage',
+                component:() =>import('../components/page/worker/workerImage.vue'),
+                meta:{title:'工作人员分析图'}
+            },
             ,
             {
                 //查看具体工作人员信息
@@ -105,14 +111,26 @@ export default new Router({
                 path:'/addVolunteer',
                 component:() =>import('../components/page/volunteer/addVolunteer.vue'),
                 meta: { title: '添加志愿者' }
-            }
+            },
+            {
+                // 义工统计分析图
+                path:'/volunteerImage',
+                component:() =>import('../components/page/volunteer/volunteerImage.vue'),
+                meta:{title:'义工分析图'}
+            },
             ,
             {
                 //查看具体志愿者信息
                 path:'/concreteVolunteer',
                 component:() =>import('../components/page/volunteer/concreteVolunteer.vue'),
                 meta: { title: '查看志愿者信息' }
-            }
+            },
+            {
+                                path:'/managerInfo',
+                                component:() =>import('../components/page/managerInfo.vue'),
+                                meta: { title: '查看管理员信息' }
+                                
+                            }
         ]
     }
    

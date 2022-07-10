@@ -105,7 +105,13 @@ export default {
         this.$router.push('/oldMen');
       },
       old_ana(){
-          this.$router.push('/old_ana');
+          //获取老人年龄分析图
+          this.$axios.get("http://127.0.0.1:5000/analysisImage_old")
+          .then(res =>{
+              localStorage.setItem("oldImage",JSON.stringify(res.data.image))
+              console.log(res.data.image)
+          })
+          this.$router.push('/oldImage');
       },
       chart(){
           this.$router.push('/chart');
@@ -125,7 +131,14 @@ export default {
           .then(res =>{
               localStorage.setItem("record",JSON.stringify(res.data))
           })
-
+//           $.ajax({
+//               url:'http://127.0.0.1:5000/readRecord',
+//               type:'post',
+//               dataType:'json',
+//               success:function(data){ //后端返回的json数据（此处data为json对象）
+//                 localStorage.setItem("record",JSON.stringify(data));
+//                }
+//             })
           //查看突发情况记录
           this.$router.push('/emergency')
       },
@@ -143,6 +156,14 @@ export default {
 
           this.$router.push('/workers')
       },
+      w_ana(){
+          //获取工作人员分析图
+          this.$axios.get("http://127.0.0.1:5000/workerImage")
+          .then(res =>{
+              localStorage.setItem("workerImage",JSON.stringify(res.data.image))
+          })
+          this.$router.push('/workerImage');
+      },
       v_mes(){
           //获取义工全部信息
             $.ajax({
@@ -155,6 +176,15 @@ export default {
              })
 
           this.$router.push('/volunteers')
+      },
+      v_ana(){
+           //获取义工分析图
+          this.$axios.get("http://127.0.0.1:5000/volunteerImage")
+          .then(res =>{
+              localStorage.setItem("volunteerImage",res.data.image)
+              console.log(res.data.image)
+          })
+          this.$router.push('/volunteerImage');
       }
     }
 

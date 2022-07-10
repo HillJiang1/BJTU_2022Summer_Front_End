@@ -2,15 +2,16 @@
 <div style="width:500px;margin-left:270px;">
     <el-form ref="form" :model="form" label-width="140px">
 
- <el-descriptions-item label="头像" prop="image" > 
+ <el-form-item label="头像" prop="image" > 
       <div>
         <el-upload
-            v-model="fileList"
+            v-model="form.fileList"
             ref="uploadref"
             action="#"
+            :class="uploadDisabled"
             :auto-upload="false"
             list-type="picture-card"
-            :file-list="fileList"
+            :file-list="form.fileList"
             :limit="1"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
@@ -18,11 +19,11 @@
         >
             <i class="el-icon-plus"></i>
         </el-upload>
-        <el-dialog v-model="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="" />
+        <el-dialog v-model="form.dialogVisible">
+            <img width="100%" :src="form.dialogImageUrl" alt="" />
         </el-dialog>
       </div>
-    </el-descriptions-item>
+    </el-form-item>
   <el-form-item label="用户名">
     <el-input v-model="form.userName" :disabled="true"></el-input>
   </el-form-item>
@@ -58,13 +59,17 @@
   
   export default {
     data() {
-      var info =JSON.parse(localStorage.getItem("managerInfo"));
+      console.log(localStorage.getItem("managerInfo"))
+      var info =JSON.parse(localStorage.getItem("managerInfo")).data;
+      console.log(info)
       return {
-         fileList: [],
+         
+        form: {
+          fileList: [{url:info.image}],
           dialogImageUrl: "",
           dialogVisible: false,
+          uploadDisabled:'',
           fileParam: "",
-        form: {
           userName:info.userName,
           realName:info.realName,
           sex:info.sex,
@@ -78,28 +83,39 @@
        handleRemove(file, fileList) {
             this.fileList.pop();
             console.log(file, fileList);
+            if(fileList.length ==0){
+              this.uploadDisabled=''
+            }
         },
         handlePictureCardPreview(file) {
             this.dialogImageUrl = file.url;
             this.dialogVisible = true;
         },
         handleChange(file,fileList){
+          if (fileList.length >0){
+            this.uploadDisabled ='disabled'
+          }
           this.fileParam=new FormData();
           this.fileParam.append("file",file["raw"]);
           this.fileParam.append("fileName",file["name"]);
-          this.fileParam.append("userName",localStorage.getItem("userName"));
-          this.fileParam.append("realName",this.realName);
-          this.fileParam.append("sex",this.sex);
-          this.fileParam.append("mail",this.mail);
-          this.fileParam.append("phone",this.phone);
-          this.fileParam.append("des",this.des);
+        this.fileParam.append("userName",localStorage.getItem("userName"));
+          this.fileParam.append("realName",this.form.realName);
+          this.fileParam.append("sex",this.form.sex);
+          this.fileParam.append("mail",this.form.mail);
+          this.fileParam.append("phone",this.form.phone);
+          this.fileParam.append("des",this.form.des);
+         
+          
         },
        modify(){
+        console.log(this.fileParam)
+          var that=this
           this.$axios.post("http://127.0.0.1:5000/change",this.fileParam
         ).then(res =>{
           if(res.data ==1)
           {
             alert("更新成功");
+            that.$router.push('/home')
           }
           else
             alert("更新失败")
@@ -122,5 +138,9 @@
     border: 1px solid #eaeaea;
     margin-left: 238px;
     box-shadow: 0 0 25px #cac6c6;
+}
+
+.disabled .el-upload--picture-card{
+  display: none;
 }
 </style>

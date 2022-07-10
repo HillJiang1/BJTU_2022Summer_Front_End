@@ -59,18 +59,17 @@ export default {
                 this.$router.push('/');
             }
             if (command == 'info') {
-                // alert(1)
-                // console.log(index)
-                //  var userName = this.form[index].userName
-                
-                // alert(userName)
-         //通过id向后端获取老人数据
-                var userName=JSON.parse(localStorage.getItem("userName"))
-console.log(userName)
-                alert(userName)
+                //通过userName向后端获取管理员数据
+                // alert("lalla")
+                this.$router.push('/managerInfo')
+                console.log(localStorage.getItem('userName'))
+               var userName=localStorage.getItem('userName');
+                console.log(userName);
+                alert(userName);
 
                 this.$axios.post("http://127.0.0.1:5000/queryManager",{userName:userName})
                 .then(res =>{
+            console.log(JSON.stringify(res.data))
                     localStorage.setItem("managerInfo",JSON.stringify(res))
                   })
                  this.$router.push('/managerInfo')

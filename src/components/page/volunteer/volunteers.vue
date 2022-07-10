@@ -79,18 +79,18 @@
 
     methods:{
       //查看义工
-        queryVolunteer:function(index){
-         alert(this.tableData[index].id)
-         var id = this.tableData[index].id
-         //通过id向后端获取义工数据
-        //  localStorage.setItem("worker_id",id)
-        localStorage.setItem("id",id)
+       queryVolunteer:function(index){
+       alert(this.tableData[index].id)
+        var id = this.tableData[index].id
+         //通过id向后端获取义工数据
+        //  localStorage.setItem("worker_id",id)
+        localStorage.setItem("id",id)
           this.$axios.post("http://127.0.0.1:5000/queryVolunteer",{id:id})
           .then(res =>{
             localStorage.setItem("concreteVolunteer",JSON.stringify(res))
           })
          this.$router.push('/concreteVolunteer')
-        },
+        },
         
         addVolunteer:function(){
             alert(111)
