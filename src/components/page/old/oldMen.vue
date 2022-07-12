@@ -47,6 +47,7 @@
       width="250"
       align="center">
       <template slot-scope="scope">
+        <el-button  type="text" size="small" @click.native.prevent="old_face(scope.$index)" >录入人脸</el-button>
         <el-button  type="text" size="small" @click.native.prevent="queryMan(scope.$index)" >查看</el-button>
         <el-button type="text" size="small" @click.native.prevent = "deleteRow(scope.$index,tableData)">删除</el-button>
       </template>
@@ -64,8 +65,19 @@
     data() {
       
       return {
-        tableData:[],
-     
+        // tableData:[],
+
+      tableData:[
+              {
+                  id:1,
+                  oldName:2,
+                  sex:1,
+                  phone:12,
+                  roomNumber:11,
+                  guardian1_phone:121
+                }
+            ]
+                      
       }
     },
     created(){
@@ -85,6 +97,21 @@
                }
              })
       },
+      //录入人脸
+        old_face:function(index){
+          alert(this.tableData[index].id)
+         var id = this.tableData[index].id
+         //通过id向后端获取老人数据
+          localStorage.setItem("old_id",id)
+           this.$router.push('/old_face')
+          this.$axios.get("http://127.0.0.1:5001/faceCollectOld",{id:id})
+          .then(res =>{
+            localStorage.setItem("old_face",JSON.stringify(res))
+          })
+
+//          this.$router.push('/old_face')
+         },
+
        //查看老人
         queryMan:function(index){
           alert(this.tableData[index].id)

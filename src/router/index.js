@@ -173,21 +173,10 @@ export default new Router({
                 meta: { title: '实时查看桌子监控' }
             },
             {
-                //查看桌子监控
-                path:'/test',
-                component:() =>import('../components/test.vue')
-            },
-            {
                 //查看日历
                 path:'/calendar',
                 component:() =>import('../components/page/calendar.vue'),
                 meta: { title: '查看日历' }
-            },
-            {
-                //增添日历
-                path:'/addCalendar',
-                component:() =>import('../components/page/addCalendar.vue'),
-                meta: { title: '增添日历' }
             },
         ]
     }

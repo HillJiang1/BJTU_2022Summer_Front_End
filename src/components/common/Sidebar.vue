@@ -203,7 +203,7 @@ export default {
           this.$router.push('/desk')
       }, 
       calendar(){
-        //    this.$router.push('/calendar');
+       
             $.ajax({
                 url:'http://127.0.0.1:5000/getCalendar',
                 type:'get',
@@ -212,12 +212,12 @@ export default {
                     alert('正常');
                     localStorage.setItem("calendar",JSON.stringify(data));
                     console.log(data);
-                    this.$router.push('/calendar');
+                    // this.$router.push('/calendar');
                 },
                 error:function(){
                     alert('异常')
                 }
-            })
+            });this.$router.push('/calendar');
         }
     }
 

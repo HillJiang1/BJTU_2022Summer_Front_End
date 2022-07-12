@@ -69,8 +69,8 @@ export default {
            alert(this.ruleForm2.username +" "+this.ruleForm2.password)
            
             var that = this
-            that.$router.push('/test')
-            // that.$router.push('/home');
+            // that.$router.push('/test')
+            that.$router.push('/home');
             $.ajax({
               url:'http://127.0.0.1:5000/login',
               data:JSON.stringify({"userid":this.ruleForm2.username, "pass":this.ruleForm2.password}),
