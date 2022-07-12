@@ -54,11 +54,9 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script>
   export default {
-
     data() {
-      var workers_info = JSON.parse(localStorage.getItem('workers')||'[]');
       return {
-        tableData: workers_info,
+        tableData: []
         // tableData:[
         //   {
         //     id:'1',
@@ -78,8 +76,23 @@
      
       }
     },
-
+    created(){
+      this.getData()
+    },
     methods:{
+      getData:function(){
+        var that = this
+        $.ajax({
+                url:'http://127.0.0.1:5000/queryWorkers',
+                type:'post',
+                dataType:'json',
+                success:function(data){ //后端返回的json数据（此处data为json对象）
+                console.log(data)
+                localStorage.setItem("workers",JSON.stringify(data));
+                that.tableData = JSON.parse(localStorage.getItem('workers')||'[]')
+               }
+             })
+      },
        //查看工作人员
         queryWorker:function(index){
          alert(this.tableData[index].id)

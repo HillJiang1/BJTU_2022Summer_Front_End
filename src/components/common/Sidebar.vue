@@ -55,10 +55,10 @@
                 </template>
                 <el-menu-item-group>
                     <template slot="title"></template>
-                        <el-menu-item index="4-1" class="el-icon-camera-solid">   房间</el-menu-item>
-                        <el-menu-item index="4-2" class="el-icon-camera-solid">   走廊</el-menu-item>
-                        <el-menu-item index="4-3" class="el-icon-camera-solid">   院子</el-menu-item>
-                        <el-menu-item index="4-4" class="el-icon-camera-solid">   桌子</el-menu-item>
+                        <el-menu-item index="4-1" class="el-icon-camera-solid" @click = "room">   房间</el-menu-item>
+                        <el-menu-item index="4-2" class="el-icon-camera-solid" @click = "corridor">   走廊</el-menu-item>
+                        <el-menu-item index="4-3" class="el-icon-camera-solid" @click = "yard">   院子</el-menu-item>
+                        <el-menu-item index="4-4" class="el-icon-camera-solid" @click = "desk">   桌子</el-menu-item>
                 </el-menu-item-group>
             </el-submenu>   
 
@@ -67,6 +67,12 @@
                 <i class="el-icon-tickets"></i>
                 <span slot="title" >突发情况记录</span>
             </el-menu-item>
+
+             <el-menu-item index="6" @click = "calendar">
+                <i class="el-icon-s-claim"></i>
+                <span slot="title" >日程表</span>
+            </el-menu-item>
+
 
         </el-menu>
     </div>
@@ -131,14 +137,6 @@ export default {
           .then(res =>{
               localStorage.setItem("record",JSON.stringify(res.data))
           })
-//           $.ajax({
-//               url:'http://127.0.0.1:5000/readRecord',
-//               type:'post',
-//               dataType:'json',
-//               success:function(data){ //后端返回的json数据（此处data为json对象）
-//                 localStorage.setItem("record",JSON.stringify(data));
-//                }
-//             })
           //查看突发情况记录
           this.$router.push('/emergency')
       },
@@ -185,7 +183,42 @@ export default {
               console.log(res.data.image)
           })
           this.$router.push('/volunteerImage');
-      }
+      },
+      v_face(){
+           this.$router.push('/v_face');
+      },
+      w_face(){
+            this.$router.push('/w_face');
+      },
+      room(){
+          this.$router.push('/room')
+      },
+      corridor(){
+          this.$router.push('/corridor')
+      },
+      yard(){
+          this.$router.push('/yard')
+      },
+      desk(){
+          this.$router.push('/desk')
+      }, 
+      calendar(){
+        //    this.$router.push('/calendar');
+            $.ajax({
+                url:'http://127.0.0.1:5000/getCalendar',
+                type:'get',
+                dataType:'json',
+                success:function(data){
+                    alert('正常');
+                    localStorage.setItem("calendar",JSON.stringify(data));
+                    console.log(data);
+                    this.$router.push('/calendar');
+                },
+                error:function(){
+                    alert('异常')
+                }
+            })
+        }
     }
 
 }

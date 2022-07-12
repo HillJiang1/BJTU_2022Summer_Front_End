@@ -2,7 +2,7 @@
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="用户名" prop="userid" style="margin-left:100px; margin-top:100px">
      <el-col :span="8">
-         <el-input type="text" v-model="ruleForm.userid" autocomplete="off"></el-input>
+         <el-input type="text" v-model="ruleForm.userid" autocomplete="off" :disabled="true"></el-input>
      </el-col>
   </el-form-item>
   <el-form-item label="新密码" prop="pass" style="margin-left:100px; margin-top:30px">
@@ -25,7 +25,7 @@
 <script>
   export default {
     data() {
-      
+      var user = localStorage.getItem("userName")
       var validatePass = (rules, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -47,7 +47,7 @@
       };
       return {
         ruleForm: {
-          userid:'',
+          userid:user,
           pass: '',
         },
         rules: {

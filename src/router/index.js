@@ -36,8 +36,13 @@ export default new Router({
                 path:'/addOld',
                 component:() =>import('../components/page/old/addOld.vue'),
                 meta: { title: '添加老人' }
-            }
-            ,
+            },
+            {
+                //老人录入人脸
+                path:'/old_face',
+                component:() =>import('../components/page/old/old_face.vue'),
+                meta: { title: '老人录入人脸' }
+            },
             {
                 //查看具体老人信息
                 path:'/concreteOld',
@@ -82,6 +87,12 @@ export default new Router({
                 meta:{title:'全部工作人员信息'}
             },
             {
+                //工作人员录入人脸
+                path:'/w_face',
+                component:() =>import('../components/page/worker/w_face.vue'),
+                meta: { title: '工作人员录入人脸' }
+            },
+            {
                 //添加工作人员
                 path:'/addWorker',
                 component:() =>import('../components/page/worker/addWorker.vue'),
@@ -113,6 +124,12 @@ export default new Router({
                 meta: { title: '添加志愿者' }
             },
             {
+                //志愿者录入人脸
+                path:'/v_face',
+                component:() =>import('../components/page/volunteer/v_face.vue'),
+                meta: { title: '志愿者录入人脸' }
+            },
+            {
                 // 义工统计分析图
                 path:'/volunteerImage',
                 component:() =>import('../components/page/volunteer/volunteerImage.vue'),
@@ -126,11 +143,52 @@ export default new Router({
                 meta: { title: '查看志愿者信息' }
             },
             {
-                                path:'/managerInfo',
-                                component:() =>import('../components/page/managerInfo.vue'),
-                                meta: { title: '查看管理员信息' }
+                 path:'/managerInfo',
+                 component:() =>import('../components/page/managerInfo.vue'),
+                 meta: { title: '查看管理员信息' }
                                 
-                            }
+            },
+            {
+                //查看房间监控
+                path:'/room',
+                component:() =>import('../components/page/positions/room.vue'),
+                meta: { title: '实时查看房间监控' }
+            },
+            {
+                //查看走廊监控
+                path:'/corridor',
+                component:() =>import('../components/page/positions/corridor.vue'),
+                meta: { title: '实时查看走廊监控' }
+            },
+            {
+                //查看院子监控
+                path:'/yard',
+                component:() =>import('../components/page/positions/yard.vue'),
+                meta: { title: '实时查看院子监控' }
+            },
+            {
+                //查看桌子监控
+                path:'/desk',
+                component:() =>import('../components/page/positions/desk.vue'),
+                meta: { title: '实时查看桌子监控' }
+            },
+            {
+                //查看桌子监控
+                path:'/test',
+                component:() =>import('../components/test.vue')
+            },
+            {
+                //查看日历
+                path:'/calendar',
+                component:() =>import('../components/page/calendar.vue'),
+                meta: { title: '查看日历' }
+            },
+            {
+                //增添日历
+                path:'/addCalendar',
+                component:() =>import('../components/page/addCalendar.vue'),
+                meta: { title: '增添日历' }
+            },
         ]
     }
    

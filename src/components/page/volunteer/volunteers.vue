@@ -54,9 +54,9 @@
 <script>
   export default {
     data() {
-      var volunteers_info = JSON.parse(localStorage.getItem('volunteers')||'[]');
+      
       return {
-        tableData: volunteers_info,
+        tableData: []
         // tableData:[
         //   {
         //     id:'1',
@@ -76,8 +76,42 @@
      
       }
     },
-
+    created(){
+      this.getData()
+    },
     methods:{
+      getData:function(){
+        // let  json = [
+        //   {
+        //     id:'1',
+        //     volunteerName:'小李',
+        //     sex:'男',
+        //     phone:'1221111',
+        //     workTime:'1-1-1'
+        //   },
+        //    {
+        //     id:'5',
+        //     volunteerName:'小李',
+        //     sex:'男',
+        //     phone:'1221111',
+        //     workTime:'1-1-1'
+        //   }
+        // ]
+        // this.tableData = json
+        var that = this
+         $.ajax(
+           {
+                url:'http://127.0.0.1:5000/queryVolunteers',
+                type:'post',
+                dataType:'json',
+                success:function(data){ //后端返回的json数据（此处data为json对象）
+                localStorage.setItem("volunteers_info",JSON.stringify(data));    
+                that.tableData = JSON.parse(localStorage.getItem('volunteers_info')||'[]')
+  
+                }
+             })
+      },
+      
       //查看义工
        queryVolunteer:function(index){
        alert(this.tableData[index].id)
@@ -88,6 +122,7 @@
           this.$axios.post("http://127.0.0.1:5000/queryVolunteer",{id:id})
           .then(res =>{
             localStorage.setItem("concreteVolunteer",JSON.stringify(res))
+            console.log(JSON.stringify(res))
           })
          this.$router.push('/concreteVolunteer')
         },
