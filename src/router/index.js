@@ -178,6 +178,12 @@ export default new Router({
                 component:() =>import('../components/page/calendar.vue'),
                 meta: { title: '查看日历' }
             },
+            {
+                //查看日历
+                path:'/test',
+                component:() =>import('../components/test.vue'),
+                meta: { title: '测试' }
+            },
         ]
     }
    

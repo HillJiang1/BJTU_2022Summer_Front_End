@@ -1,5 +1,23 @@
 <template>
+<div>
     <div>
-          <img src="http://127.0.0.1:5001/faceCollectvol">
+     
+          <img :src=url v-image-preview/>
+    </div>
     </div>
 </template>
+
+<script>
+
+    export default{
+        data(){
+             var id1 = JSON.parse(localStorage.getItem("id"));
+             console.log(id1)
+            var image ="http://127.0.0.1:5001/faceCollectvol?id="+id1
+            return{
+                url:image
+                
+            }         
+        }
+    }
+</script>

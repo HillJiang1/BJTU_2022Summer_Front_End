@@ -1,29 +1,6 @@
 <template>
 <div style="width:500px;margin-left:270px;">
     <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-
- <el-form-item label="头像" prop="image" > 
-      <div>
-        <el-upload
-            v-model="form.fileList"
-            ref="uploadref"
-            action="#"
-            :class="uploadDisabled"
-            :auto-upload="false"
-            list-type="picture-card"
-            :file-list="form.fileList"
-            :limit="1"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :on-change="handleChange"
-        >
-            <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog v-model="form.dialogVisible">
-            <img width="100%" :src="form.dialogImageUrl" alt="" />
-        </el-dialog>
-      </div>
-    </el-form-item>
   <el-form-item label="用户名">
     <el-input v-model="form.userName" :disabled="true"></el-input>
   </el-form-item>
@@ -44,6 +21,28 @@
   <el-form-item label="描述">
     <el-input v-model="form.des"></el-input>
   </el-form-item>
+  <el-form-item label="头像" prop="image" > 
+      <div>
+        <el-upload
+            v-model="fileList"
+            ref="uploadref"
+            action="#"
+            :class="uploadDisabled"
+            :auto-upload="false"
+            list-type="picture-card"
+            :file-list="fileList"
+            :limit="1"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-change="handleChange"
+        >
+            <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog v-model="form.dialogVisible">
+            <img width="100%" :src="form.dialogImageUrl" alt="" />
+        </el-dialog>
+      </div>
+    </el-form-item>
   
   <el-form-item  style="width:100%;">
     <el-button type="primary" @click="modify()"  style="width:50%;margin-left:80px;margin-top:10px">保存修改</el-button>
@@ -79,13 +78,15 @@
       console.log(localStorage.getItem("managerInfo"))
       var info =JSON.parse(localStorage.getItem("managerInfo")).data;
       console.log(info)
+      // alert("email"+info.mail)
       return {
-         
+         fileList: [{url:info.image}],
+         uploadDisabled:'disabled',
         form: {
-          fileList: [{url:info.image}],
+          
           dialogImageUrl: "",
           dialogVisible: false,
-          uploadDisabled:'',
+          
           fileParam: "",
           userName:info.userName,
           realName:info.realName,
@@ -102,7 +103,7 @@
     },
     methods: {
        handleRemove(file, fileList) {
-            this.fileList.pop();
+            fileList.pop();
             console.log(file, fileList);
             if(fileList.length ==0){
               this.uploadDisabled=''
@@ -122,9 +123,10 @@
         this.fileParam.append("userName",localStorage.getItem("userName"));
           this.fileParam.append("realName",this.form.realName);
           this.fileParam.append("sex",this.form.sex);
-          this.fileParam.append("mail",this.form.mail);
+          this.fileParam.append("mail",this.form.email);
           this.fileParam.append("phone",this.form.phone);
           this.fileParam.append("des",this.form.des);
+          alert(this.form.email)
          
           
         },

@@ -16,7 +16,7 @@
                 </template>
                 <el-menu-item-group>
                     <template slot="title"></template>
-                        <el-menu-item index="1-1" class="el-icon-reading" @click="old_face()">   录入人脸</el-menu-item>
+                        <!-- <el-menu-item index="1-1" class="el-icon-reading" @click="old_face()">   录入人脸</el-menu-item> -->
                         <el-menu-item index="1-2" class="el-icon-tickets" @click="old_mes()">   相关信息</el-menu-item>
                         <el-menu-item index="1-3" class="el-icon-data-line" @click="old_ana()">   统计分析</el-menu-item>
                 </el-menu-item-group>
@@ -29,7 +29,7 @@
                 </template>
                 <el-menu-item-group>
                     <template slot="title"></template>
-                        <el-menu-item index="2-1" class="el-icon-s-management" @click="v_face()" >   录入人脸</el-menu-item>
+                        <!-- <el-menu-item index="2-1" class="el-icon-s-management" @click="v_face()" >   录入人脸</el-menu-item> -->
                         <el-menu-item index="2-2"  class="el-icon-tickets" @click="v_mes()">   相关信息</el-menu-item>
                         <el-menu-item index="2-3"  class="el-icon-data-line" @click="v_ana()">   统计分析</el-menu-item>
                 </el-menu-item-group>
@@ -42,7 +42,7 @@
                 </template>
                 <el-menu-item-group>
                     <template slot="title"></template>
-                        <el-menu-item index="3-1" class="el-icon-s-management" @click="w_face()" >   录入人脸</el-menu-item>
+                        <!-- <el-menu-item index="3-1" class="el-icon-s-management" @click="w_face()" >   录入人脸</el-menu-item> -->
                         <el-menu-item index="3-2"  class="el-icon-tickets" @click="w_mes()">   相关信息</el-menu-item>
                         <el-menu-item index="3-3"  class="el-icon-data-line" @click="w_ana()">   统计分析</el-menu-item>
                 </el-menu-item-group>
@@ -114,10 +114,17 @@ export default {
           //获取老人年龄分析图
           this.$axios.get("http://127.0.0.1:5000/analysisImage_old")
           .then(res =>{
-              localStorage.setItem("oldImage",JSON.stringify(res.data.image))
-              console.log(res.data.image)
-          })
+              localStorage.setItem("oldImage",JSON.stringify(res.data.url))
+              console.log(res.data.url)
+          });
+          this.$axios.post("http://127.0.0.1:5000/old_details")
+          .then(res =>{
+              localStorage.setItem("old_details",JSON.stringify(res.data))
+              console.log(res.data)
+          });
           this.$router.push('/oldImage');
+
+        
       },
       chart(){
           this.$router.push('/chart');
@@ -158,7 +165,11 @@ export default {
           //获取工作人员分析图
           this.$axios.get("http://127.0.0.1:5000/workerImage")
           .then(res =>{
-              localStorage.setItem("workerImage",JSON.stringify(res.data.image))
+              localStorage.setItem("workerImage",JSON.stringify(res.data.url))
+          })
+          this.$axios.post("http://127.0.0.1:5000/w_details")
+          .then(res =>{
+              localStorage.setItem("w_details",JSON.stringify(res.data))
           })
           this.$router.push('/workerImage');
       },
@@ -179,9 +190,14 @@ export default {
            //获取义工分析图
           this.$axios.get("http://127.0.0.1:5000/volunteerImage")
           .then(res =>{
-              localStorage.setItem("volunteerImage",res.data.image)
-              console.log(res.data.image)
+              localStorage.setItem("volunteerImage",res.data.url)
+              console.log(res.data.url)
           })
+           this.$axios.post("http://127.0.0.1:5000/v_details")
+          .then(res =>{
+              localStorage.setItem("v_details",JSON.stringify(res.data))
+              console.log(res.data)
+          });
           this.$router.push('/volunteerImage');
       },
       v_face(){
@@ -203,21 +219,7 @@ export default {
           this.$router.push('/desk')
       }, 
       calendar(){
-       
-            $.ajax({
-                url:'http://127.0.0.1:5000/getCalendar',
-                type:'get',
-                dataType:'json',
-                success:function(data){
-                    alert('正常');
-                    localStorage.setItem("calendar",JSON.stringify(data));
-                    console.log(data);
-                    // this.$router.push('/calendar');
-                },
-                error:function(){
-                    alert('异常')
-                }
-            });this.$router.push('/calendar');
+       this.$router.push('/calendar');
         }
     }
 

@@ -8,19 +8,19 @@
     <el-table-column
       prop="id"
       label="编号"
-      width="150"
+      width="50"
       align="center">
     </el-table-column>
     <el-table-column
       prop="oldName"
       label="姓名"
-      width="170"
+      width="120"
       align="center">
     </el-table-column>
     <el-table-column
       prop="sex"
       label="性别"
-      width="100"
+      width="50"
       align="center">
     </el-table-column>
     <el-table-column
@@ -44,7 +44,7 @@
     <el-table-column
       float="right"
       label="操作"
-      width="250"
+      width="375"
       align="center">
       <template slot-scope="scope">
         <el-button  type="text" size="small" @click.native.prevent="old_face(scope.$index)" >录入人脸</el-button>
@@ -65,18 +65,18 @@
     data() {
       
       return {
-        // tableData:[],
+        tableData:[],
 
-      tableData:[
-              {
-                  id:1,
-                  oldName:2,
-                  sex:1,
-                  phone:12,
-                  roomNumber:11,
-                  guardian1_phone:121
-                }
-            ]
+      // tableData:[
+      //         {
+      //             id:1,
+      //             oldName:2,
+      //             sex:1,
+      //             phone:12,
+      //             roomNumber:11,
+      //             guardian1_phone:121
+      //           }
+      //       ]
                       
       }
     },

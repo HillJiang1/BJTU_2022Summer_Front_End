@@ -33,13 +33,13 @@
   <el-form-item label="头像">
     <div>
         <el-upload
-            v-model="form.fileList"
+            v-model="fileList"
             ref="uploadref"
             action="#"
             :class="uploadDisabled"
             :auto-upload="false"
             list-type="picture-card"
-            :file-list="form.fileList"
+            :file-list="fileList"
             :limit="1"
             :on-change="handleChange"
             :on-preview="handlePictureCardPreview"
@@ -90,9 +90,10 @@
             }
         };
       return {
-        uploadDisabled:'',
+        uploadDisabled:'disabled',
+        fileList: [{url:volunteer.image}],
         form:{
-              fileList: [{url:volunteer.image}],
+              
             dialogImageUrl: "",
             dialogVisible: false,
             
@@ -116,8 +117,8 @@
     },
     methods: {
       handleRemove(file, fileList) {
-            this.fileList.pop();
-            console.log(file, fileList);
+            fileList.pop();
+            alert(fileList.length)
             if(fileList.length ==0){
               this.uploadDisabled=''
             }
@@ -156,9 +157,6 @@
             alert("更新失败")
             })
             }
-             
-       
-       
   }
   }
 </script>

@@ -7,19 +7,19 @@
     <el-table-column
       prop="id"
       label="编号"
-      width="150"
+      width="80"
       align="center">
     </el-table-column>
     <el-table-column
       prop="volunteerName"
       label="姓名"
-      width="170"
+      width="180"
       align="center">
     </el-table-column>
     <el-table-column
       prop="sex"
       label="性别"
-      width="170"
+      width="80"
       align="center">
     </el-table-column>
     <el-table-column
@@ -31,15 +31,16 @@
     <el-table-column
       prop="workTime"
       label="工时"
-      width="270"
+      width="250"
       align="center">
     </el-table-column>
     <el-table-column
       float="right"
       label="操作"
-      width="270"
+      width="365"
       align="center">
       <template slot-scope="scope">
+        <el-button  type="text" size="small" @click.native.prevent="v_face(scope.$index)" >录入人脸</el-button>
         <el-button  type="text" size="small" @click.native.prevent="queryVolunteer(scope.$index)" >查看</el-button>
         <el-button type="text" size="small" @click.native.prevent = "deleteRow(scope.$index,tableData)">删除</el-button>
       </template>
@@ -58,21 +59,15 @@
       return {
         tableData: []
         // tableData:[
-        //   {
-        //     id:'1',
-        //     volunteerName:'小李',
-        //     sex:'男',
-        //     phone:'1221111',
-        //     workTime:'1-1-1'
-        //   },
-        //    {
-        //     id:'5',
-        //     volunteerName:'小李',
-        //     sex:'男',
-        //     phone:'1221111',
-        //     workTime:'1-1-1'
-        //   }
-        // ]
+        //       {
+        //           id:1,
+        //           oldName:2,
+        //           sex:1,
+        //           phone:12,
+        //           roomNumber:11,
+        //           guardian1_phone:121
+        //         }
+        //     ]
      
       }
     },
@@ -111,7 +106,21 @@
                 }
              })
       },
-      
+      // 录入人脸
+      v_face:function(index){
+       alert(this.tableData[index].id)
+        var id = this.tableData[index].id
+         //通过id向后端获取义工数据
+        //  localStorage.setItem("worker_id",id)
+        localStorage.setItem("id",id)
+          this.$router.push('/v_face')
+          this.$axios.post("http://127.0.0.1:5000/faceCollectvol",{id:id})
+          .then(res =>{
+            localStorage.setItem("v_face",JSON.stringify(res))
+          })
+//          this.$router.push('/concreteVolunteer')
+        },
+
       //查看义工
        queryVolunteer:function(index){
        alert(this.tableData[index].id)

@@ -1,12 +1,12 @@
 <template>
-    <el-table :data="tableData" height="400" border style="width: 100%"  :row-style="{height: '80px'}">
-    <el-table-column prop="id" align="center" label="id" width="60"></el-table-column>
-    <el-table-column prop="type" align="center" label="类型" width="200"></el-table-column>
+    <el-table :data="tableData" border style="width: 100%"  >
+    <el-table-column prop="id" align="center" label="id" width="80"></el-table-column>
+    <el-table-column prop="type" align="center" label="类型" width="170"></el-table-column>
     <el-table-column prop="time" align="center" label="时间" width="180"></el-table-column>
-    <el-table-column prop="destination" align="center" label="地点" width="250"></el-table-column>
+    <el-table-column prop="destination" align="center" label="地点" width="200"></el-table-column>
     <el-table-column prop="des" align="center" label="描述" width="220"></el-table-column>
     <el-table-column prop="old_id" align="center" label="老人ID" width="180"></el-table-column>
-    <el-table-column prop="pic" align="center" label="图片" width="180" show-overflow-tooltip>
+    <el-table-column prop="pic" align="center" label="图片" width="182" show-overflow-tooltip>
         <template slot-scope="scope">
                <img :src="scope.row.image" width="50" height="50" v-image-preview/>
         </template>
